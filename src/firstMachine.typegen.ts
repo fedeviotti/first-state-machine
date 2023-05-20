@@ -20,7 +20,7 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    consoleLogId: "done.invoke.fetch.loading:invocation[0]";
+    updateUserDetails: "done.invoke.fetch.loading:invocation[0]";
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {};
