@@ -6,12 +6,18 @@ import {Box, Button, Input, Stack, Text} from "@chakra-ui/react";
 
 const idleSelector = (state: FirstMachineState) => state.matches("idle");
 const loadingSelector = (state: FirstMachineState) => state.matches("loading");
+const successSelector = (state: FirstMachineState) => state.matches("success");
+const userIdSelector = (state: FirstMachineState) => state.context.userId;
+const nameSelector = (state: FirstMachineState) => state.context.name;
 
 export const Home = () => {
   const globalServices = useContext(GlobalStateContext);
   const isIdle = useSelector(globalServices.firstService, idleSelector);
   const isLoading = useSelector(globalServices.firstService, loadingSelector);
-  const userId = useSelector(globalServices.firstService, (state) => state.context.userId);
+  const isSuccess = useSelector(globalServices.firstService, successSelector);
+  const userId = useSelector(globalServices.firstService, userIdSelector);
+  const name = useSelector(globalServices.firstService, nameSelector);
+  console.log("name", name);
   const { send } = globalServices.firstService;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,13 +46,21 @@ export const Home = () => {
   }
 
   if (isLoading) {
-    return (<Box>Loading...{userId}</Box>);
+    return (<Box>Loading...</Box>);
+  }
+
+  if (isSuccess) {
+    return (
+      <Box>
+        <Text>User id: {userId}</Text>
+        <Text>User details: {name}</Text>
+      </Box>
+    )
   }
 
   return (
     <Box>
-    <Text>{userId}</Text>
-    <Text>User details</Text>
+      <Text>Something went wrong</Text>
     </Box>
   );
 }
