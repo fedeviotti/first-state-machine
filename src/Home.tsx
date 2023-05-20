@@ -8,7 +8,7 @@ const idleSelector = (state: FirstMachineState) => state.matches("idle");
 const loadingSelector = (state: FirstMachineState) => state.matches("loading");
 const successSelector = (state: FirstMachineState) => state.matches("success");
 const userIdSelector = (state: FirstMachineState) => state.context.userId;
-const nameSelector = (state: FirstMachineState) => state.context.name;
+const userDetailsSelector = (state: FirstMachineState) => state.context.userDetails;
 
 export const Home = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -16,8 +16,7 @@ export const Home = () => {
   const isLoading = useSelector(globalServices.firstService, loadingSelector);
   const isSuccess = useSelector(globalServices.firstService, successSelector);
   const userId = useSelector(globalServices.firstService, userIdSelector);
-  const name = useSelector(globalServices.firstService, nameSelector);
-  console.log("name", name);
+  const userDetails = useSelector(globalServices.firstService, userDetailsSelector);
   const { send } = globalServices.firstService;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +52,9 @@ export const Home = () => {
     return (
       <Box>
         <Text>User id: {userId}</Text>
-        <Text>User details: {name}</Text>
+        <Text>User details</Text>
+        <Text>Name: {userDetails.name}</Text>
+        <Text>Gender: {userDetails.gender}</Text>
       </Box>
     )
   }
