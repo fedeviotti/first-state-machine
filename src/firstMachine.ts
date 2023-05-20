@@ -1,14 +1,20 @@
 import {createMachine, assign, StateFrom} from 'xstate';
 
 const fetchUser = (userId: number) =>
-  fetch(`https://swapi.dev/api/people/${userId}`).then((response) => response.json());
+  fetch(`https://swapi.dev/api/people/${userId}`).then(async (response) => {
+    const data = await response.json()
+    return { userDetails: { ...data }}
+  });
 
 export const firstMachine = createMachine({
   tsTypes: {} as import("./firstMachine.typegen").Typegen0,
   schema: {
     context: {} as {
       userId: number,
-      name: string,
+      userDetails: {
+        name?: string,
+        gender?: string,
+      }
     },
     events: {} as
       | { type: 'SUBMIT', userId: number}
@@ -18,7 +24,10 @@ export const firstMachine = createMachine({
     services: {} as {
       fetchUser: {
         data: {
-          name: string,
+          userDetails: {
+            name: string,
+            gender?: string,
+          },
         }
       }
     },
@@ -27,7 +36,7 @@ export const firstMachine = createMachine({
   initial: 'idle',
   context: {
     userId: 0,
-    name: '',
+    userDetails: {},
   },
   states: {
     idle: {
@@ -72,7 +81,7 @@ export const firstMachine = createMachine({
   },
   actions: {
     updateUserDetails: assign({
-      name: (_, event) => event.data.name
+      userDetails: (_, event) => event.data.userDetails
     }),
   },
 });
