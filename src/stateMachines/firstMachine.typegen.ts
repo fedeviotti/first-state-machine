@@ -17,10 +17,11 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: never;
+    services: "fetchUser";
   };
   eventsCausingActions: {
     updateUserDetails: "done.invoke.fetch.loading:invocation[0]";
+    updateUserIdState: "SUBMIT";
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {};

@@ -1,10 +1,6 @@
-import {createMachine, assign, StateFrom} from 'xstate';
-
-const fetchUser = (userId: number) =>
-  fetch(`https://swapi.dev/api/people/${userId}`).then(async (response) => {
-    const data = await response.json()
-    return { userDetails: { ...data }}
-  });
+import * as React from 'react';
+import {createMachine, assign, StateFrom, ActorRefFrom} from 'xstate';
+import {createContext} from "react";
 
 export const firstMachine = createMachine({
   tsTypes: {} as import("./firstMachine.typegen").Typegen0,
@@ -43,9 +39,7 @@ export const firstMachine = createMachine({
       on: {
         SUBMIT: {
           target: 'loading',
-          actions: assign({
-            userId: (_, event) => event.userId
-          })
+          actions: 'updateUserIdState'
         }
       }
     },
@@ -68,22 +62,23 @@ export const firstMachine = createMachine({
       on: {
         RETRY: {
           target: 'loading',
-          actions: assign({
-            userId: (state) => state.userId
-          })
         }
       }
     }
   }
 }, {
-  services: {
-    fetchUser: (context) => fetchUser(context.userId)
-  },
   actions: {
     updateUserDetails: assign({
       userDetails: (_, event) => event.data.userDetails
     }),
+    updateUserIdState: assign({
+      userId: (_, event) => event.userId
+    })
   },
 });
 
 export type FirstMachineState = StateFrom<typeof firstMachine>;
+
+type FirstMachineContextType = ActorRefFrom<typeof firstMachine>;
+export const FirstMachineContext = createContext<FirstMachineContextType>({} as FirstMachineContextType);
+export const useFirstMachine = () => React.useContext(FirstMachineContext);
