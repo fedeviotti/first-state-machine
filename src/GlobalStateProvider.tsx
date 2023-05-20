@@ -1,6 +1,6 @@
 import {createContext, PropsWithChildren} from 'react';
 import { useInterpret } from '@xstate/react';
-import { firstMachine } from './firstMachine';
+import { firstMachine } from './stateMachines/firstMachine';
 import {InterpreterFrom} from "xstate";
 
 export const GlobalStateContext = createContext({ firstService: {} as InterpreterFrom<typeof firstMachine> });

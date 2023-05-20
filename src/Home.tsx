@@ -1,5 +1,5 @@
 import { useSelector} from "@xstate/react";
-import { FirstMachineState} from "./firstMachine";
+import { FirstMachineState} from "./stateMachines/firstMachine";
 import {useContext} from "react";
 import {GlobalStateContext} from "./GlobalStateProvider";
 import {Box, Button, Input, Stack, Text} from "@chakra-ui/react";
