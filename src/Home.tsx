@@ -59,6 +59,8 @@ export const Home = () => {
     )
   }
 
+  // TODO: on error display a component that shows a button to retry
+
   return (
     <Box>
       <Text>Something went wrong</Text>
